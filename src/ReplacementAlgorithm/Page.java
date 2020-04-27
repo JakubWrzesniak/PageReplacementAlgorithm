@@ -1,9 +1,9 @@
 package ReplacementAlgorithm;
 
 public class Page implements Comparable<Page> {
-    private int number;
+    private Integer number;
     private boolean mifBit; // Bit modyfikacji
-    private Integer reference;
+    private int reference;
 
     public Page(int number, boolean mifBit, int reference) {
         this.number = number;
@@ -37,7 +37,7 @@ public class Page implements Comparable<Page> {
 
     @Override
     public int compareTo(Page o) {
-        return reference.compareTo(o.getReference());
+        return number.compareTo(o.getNumber());
     }
 
     @Override
