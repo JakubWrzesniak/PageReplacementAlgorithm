@@ -41,11 +41,15 @@ public abstract class Algorithm {
         return 0;
     }
 
-    private static boolean IfPageIsInFrames(Page p, Page[] frames){
+    private static boolean IfPageIsInFrames(Page p, Page[] frames) {
         for(int i = 0 ; i < frames.length ; i++ ){
-            if(frames[i] == p)
-                return true;
-        }
+            try {
+                if (frames[i].compareTo(p) == 0)
+                    return true;
+                }catch (NullPointerException e) {
+                    return false;
+                }
+            }
         return false;
     }
 
@@ -57,9 +61,12 @@ public abstract class Algorithm {
     }
 
     private static void PrintPagesStatus(Page p, Page[] frames){
-        System.out.print(p +" ");
+        System.out.print("    "+p+"        ");
         for(int i = 0; i < frames.length; i++ ){
-            System.out.print(frames[i]);
+            if(frames[i] == null)
+                System.out.print("         ");
+            else
+                System.out.print(frames[i]+"        ");
         }
         System.out.print("\n");
     }
