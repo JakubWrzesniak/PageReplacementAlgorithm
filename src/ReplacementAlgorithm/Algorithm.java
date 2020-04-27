@@ -1,9 +1,9 @@
 package ReplacementAlgorithm;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.ListIterator;
+import java.lang.reflect.Array;
+import java.nio.charset.IllegalCharsetNameException;
+import java.util.*;
 
 public abstract class Algorithm {
 
@@ -26,8 +26,34 @@ public abstract class Algorithm {
         }
         return counter;
     }
-    public static int OPT(){
-        return 0;
+    public static int OPT(ArrayList<Page> pagesReferences, int INITIAL_FRAME_SIZE){
+        Page[] frames = new Page[INITIAL_FRAME_SIZE];
+        ListIterator<Page> iterator = pagesReferences.listIterator();
+        int counter = 0;
+        int head = 0;
+        int position = 0;
+
+        PrintInitialTable(INITIAL_FRAME_SIZE);
+
+        while (iterator.hasNext()){
+            Page p = iterator.next();
+            if(!IfPageIsInFrames(p,frames)){
+                if(frames[frames.length-1]==null)
+                    frames[head++] = p;
+                else{
+                    int pos = FindPosOfTheLatestPage(pagesReferences.subList(position,pagesReferences.size()),frames);
+                    if(pos != -1)
+                        frames[pos] = p;
+                    else
+                        frames[head++] = p;
+                }
+                head %= INITIAL_FRAME_SIZE;
+                counter++;
+            }
+            PrintPagesStatus(p,frames);
+            position++;
+        }
+        return counter;
     }
     public static int LRU(){
         return 0;
@@ -51,6 +77,25 @@ public abstract class Algorithm {
                 }
             }
         return false;
+    }
+
+    private static int FindPosOfTheLatestPage(List<Page> pages, Page[] frames){
+        ArrayList<Page> temp = new ArrayList<>();
+        Iterator<Page> iterator = pages.iterator();
+
+        temp.addAll(Arrays.asList(frames));
+
+        while(iterator.hasNext() && temp.size()>1){
+            temp.remove(iterator.next());
+        }
+
+        if(temp.size()==1) {
+            for (int i = 0; i < frames.length; i++) {
+                if(frames[i] == temp.get(0))
+                    return i;
+            }
+        }
+        return -1;
     }
 
     private static void PrintInitialTable(int INITIAL_FRAME_SIZE){
