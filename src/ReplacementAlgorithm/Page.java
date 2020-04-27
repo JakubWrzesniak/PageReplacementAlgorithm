@@ -36,6 +36,17 @@ public class Page implements Comparable<Page> {
     }
 
     @Override
+    public int hashCode() {
+        return number.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Page p = (Page) obj;
+        return p.getNumber() == ((Page) obj).getNumber();
+    }
+
+    @Override
     public int compareTo(Page o) {
         return number.compareTo(o.getNumber());
     }
