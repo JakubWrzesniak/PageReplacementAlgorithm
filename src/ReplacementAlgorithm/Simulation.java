@@ -19,11 +19,12 @@ public class Simulation {
 
     public void RunAlgorithms(){
         FIFO(pages, INITIAL_FRAME_SIZE);
+        OPT(pages,INITIAL_FRAME_SIZE);
     }
 
     private void CreateRandomPages(int numberOfPages){
         Random r = new Random();
         for (int i = 0 ; i < numberOfPages; i++)
-            pages.add(new Page(r.nextInt((int) (numberOfPages/1.3))+1,true,0));
+            pages.add(new Page(r.nextInt((int) (numberOfPages/1.5))+1,true,0));
     }
 }
