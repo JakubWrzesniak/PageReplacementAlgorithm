@@ -68,24 +68,27 @@ public abstract class Algorithm {
         while (iterator.hasNext()){
             Page p = iterator.next();
             if(!IfPageIsInFrames(p,frames)) {
-                p.setTimeOfLastWork(p.getTimeOfLastWork()+1);
+                p.setTimeOfLastWork(number);
                 if(frames[frames.length-1]==null) {
                     frames[head++] = p;
                     head %= INITIAL_FRAME_SIZE;
                 }else{
                     temp.addAll(Arrays.asList(frames));
                     Collections.sort(temp);
-
+                    System.out.println(temp);
                     for(int i = 0 ; i < frames.length ;i ++){
                         if(frames[i].equals(temp.get(0)))
                             frames[i] = p;
                     }
+                    temp.clear();
                 }
                 counter++;
             }else{
                 for(Page page : frames){
-                    if(page.equals(p))
-                        page.setTimeOfLastWork(p.getTimeOfLastWork()+1);
+                    try {
+                        if (page.equals(p))
+                            page.setTimeOfLastWork(number);
+                    }catch (NullPointerException e){}
                 }
             }
             PrintPagesStatus(p,frames);
@@ -105,7 +108,7 @@ public abstract class Algorithm {
     private static boolean IfPageIsInFrames(Page p, Page[] frames) {
         for(int i = 0 ; i < frames.length ; i++ ){
             try {
-                if (frames[i].compareTo(p) == 0)
+                if (frames[i].equals(p))
                     return true;
                 }catch (NullPointerException e) {
                     return false;

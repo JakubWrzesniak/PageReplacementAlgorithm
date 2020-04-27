@@ -50,13 +50,13 @@ public class Page implements Comparable<Page> {
         if(this.timeOfLastWork == o.getTimeOfLastWork())
             return 0;
         if(this.timeOfLastWork<o.getTimeOfLastWork())
-            return 1;
-        else
             return -1;
+        else
+            return 1;
     }
 
     @Override
     public String toString() {
-        return number + " ";
+        return number + "," +timeOfLastWork ;
     }
 }
