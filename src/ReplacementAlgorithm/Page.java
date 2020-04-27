@@ -1,7 +1,7 @@
 package ReplacementAlgorithm;
 
 public class Page implements Comparable<Page> {
-    private Integer number;
+    private int number;
     private boolean mifBit; // Bit modyfikacji
     private int reference;
 
@@ -37,18 +37,23 @@ public class Page implements Comparable<Page> {
 
     @Override
     public int hashCode() {
-        return number.hashCode();
+        return number;
     }
 
     @Override
     public boolean equals(Object obj) {
         Page p = (Page) obj;
-        return p.getNumber() == ((Page) obj).getNumber();
+        return this.number == ((Page) obj).getNumber() ;
     }
 
     @Override
     public int compareTo(Page o) {
-        return number.compareTo(o.getNumber());
+        if(this.number == o.getNumber())
+            return 0;
+        if(this.number<o.getNumber())
+            return -1;
+        else
+            return 1;
     }
 
     @Override
