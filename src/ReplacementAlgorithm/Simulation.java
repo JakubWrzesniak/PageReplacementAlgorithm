@@ -21,6 +21,7 @@ public class Simulation {
         FIFO(pages, INITIAL_FRAME_SIZE);
         OPT(pages,INITIAL_FRAME_SIZE);
         LRU(pages,INITIAL_FRAME_SIZE);
+        aLRU(pages,INITIAL_FRAME_SIZE);
     }
 
     private void CreateRandomPages(int numberOfPages){

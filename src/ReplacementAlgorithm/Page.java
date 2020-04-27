@@ -57,6 +57,6 @@ public class Page implements Comparable<Page> {
 
     @Override
     public String toString() {
-        return number + "," +timeOfLastWork ;
+        return number + "," +mifBit ;
     }
 }
