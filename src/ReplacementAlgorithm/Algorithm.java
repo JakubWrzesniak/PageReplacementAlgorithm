@@ -31,7 +31,7 @@ public abstract class Algorithm {
         ListIterator<Page> iterator = pagesReferences.listIterator();
         int counter = 0;
         int head = 0;
-        int position = 0;
+        int number = 0;
 
         PrintInitialTable(INITIAL_FRAME_SIZE);
 
@@ -41,7 +41,7 @@ public abstract class Algorithm {
                 if(frames[frames.length-1]==null)
                     frames[head++] = p;
                 else{
-                    int pos = FindPosOfTheLatestPage(pagesReferences.subList(position,pagesReferences.size()),frames);
+                    int pos = FindPosOfTheLatestPage(pagesReferences.subList(number,pagesReferences.size()),frames);
                     if(pos != -1)
                         frames[pos] = p;
                     else
@@ -51,12 +51,47 @@ public abstract class Algorithm {
                 counter++;
             }
             PrintPagesStatus(p,frames);
-            position++;
+            number++;
         }
         return counter;
     }
-    public static int LRU(){
-        return 0;
+    public static int LRU(ArrayList<Page> pagesReferences, int INITIAL_FRAME_SIZE){
+        Page[] frames = new Page[INITIAL_FRAME_SIZE];
+        ListIterator<Page> iterator = pagesReferences.listIterator();
+        ArrayList<Page> temp = new ArrayList<>();
+        int counter = 0;
+        int head = 0;
+        int number = 1;
+
+        PrintInitialTable(INITIAL_FRAME_SIZE);
+
+        while (iterator.hasNext()){
+            Page p = iterator.next();
+            if(!IfPageIsInFrames(p,frames)) {
+                p.setTimeOfLastWork(p.getTimeOfLastWork()+1);
+                if(frames[frames.length-1]==null) {
+                    frames[head++] = p;
+                    head %= INITIAL_FRAME_SIZE;
+                }else{
+                    temp.addAll(Arrays.asList(frames));
+                    Collections.sort(temp);
+
+                    for(int i = 0 ; i < frames.length ;i ++){
+                        if(frames[i].equals(temp.get(0)))
+                            frames[i] = p;
+                    }
+                }
+                counter++;
+            }else{
+                for(Page page : frames){
+                    if(page.equals(p))
+                        page.setTimeOfLastWork(p.getTimeOfLastWork()+1);
+                }
+            }
+            PrintPagesStatus(p,frames);
+            number++;
+        }
+        return counter;
     }
 
     public static int aLRU(){

@@ -3,12 +3,12 @@ package ReplacementAlgorithm;
 public class Page implements Comparable<Page> {
     private int number;
     private boolean mifBit; // Bit modyfikacji
-    private int reference;
+    private int timeOfLastWork;
 
-    public Page(int number, boolean mifBit, int reference) {
+    public Page(int number, boolean mifBit, int timeOfLastWork) {
         this.number = number;
         this.mifBit = mifBit;
-        this.reference = reference;
+        this.timeOfLastWork = timeOfLastWork;
     }
 
     public int getNumber() {
@@ -27,12 +27,12 @@ public class Page implements Comparable<Page> {
         this.mifBit = mifBit;
     }
 
-    public int getReference() {
-        return reference;
+    public int getTimeOfLastWork() {
+        return timeOfLastWork;
     }
 
-    public void setReference(int reference) {
-        this.reference = reference;
+    public void setTimeOfLastWork(int timeOfLastWork) {
+        this.timeOfLastWork = timeOfLastWork;
     }
 
     @Override
@@ -42,18 +42,17 @@ public class Page implements Comparable<Page> {
 
     @Override
     public boolean equals(Object obj) {
-        Page p = (Page) obj;
         return this.number == ((Page) obj).getNumber() ;
     }
 
     @Override
     public int compareTo(Page o) {
-        if(this.number == o.getNumber())
+        if(this.timeOfLastWork == o.getTimeOfLastWork())
             return 0;
-        if(this.number<o.getNumber())
-            return -1;
-        else
+        if(this.timeOfLastWork<o.getTimeOfLastWork())
             return 1;
+        else
+            return -1;
     }
 
     @Override
