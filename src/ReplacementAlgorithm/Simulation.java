@@ -20,6 +20,9 @@ public class Simulation {
     public void RunAlgorithms(){
         FIFO(pages, INITIAL_FRAME_SIZE);
         OPT(pages,INITIAL_FRAME_SIZE);
+        LRU(pages,INITIAL_FRAME_SIZE);
+        aLRU(pages,INITIAL_FRAME_SIZE);
+
     }
 
     private void CreateRandomPages(int numberOfPages){
