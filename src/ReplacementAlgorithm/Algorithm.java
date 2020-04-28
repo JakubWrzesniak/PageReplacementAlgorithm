@@ -1,7 +1,5 @@
 package ReplacementAlgorithm;
 
-import javax.naming.InitialContext;
-import javax.swing.plaf.IconUIResource;
 import java.util.*;
 
 public abstract class Algorithm {
@@ -197,7 +195,7 @@ public abstract class Algorithm {
     }
 
     private static void PrintInitialTable(String name,int INITIAL_FRAME_SIZE){
-        System.out.println(name);
+        System.out.println(name + " " + INITIAL_FRAME_SIZE);
         System.out.print("Ref|");
         for(int i = 0 ; i < INITIAL_FRAME_SIZE ;i++)
             System.out.print("Fr"+ (i+1) + " | ");

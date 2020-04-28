@@ -15,9 +15,6 @@ public class Page implements Comparable<Page> {
         return number;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
 
     public boolean isMifBit() {
         return mifBit;
@@ -57,6 +54,6 @@ public class Page implements Comparable<Page> {
 
     @Override
     public String toString() {
-        return number + "," +mifBit ;
+        return number + " " ;
     }
 }
