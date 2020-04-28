@@ -1,6 +1,7 @@
 package ReplacementAlgorithm;
 
 import javax.naming.InitialContext;
+import javax.swing.plaf.IconUIResource;
 import java.util.*;
 
 public abstract class Algorithm {
@@ -11,7 +12,7 @@ public abstract class Algorithm {
         int head = 0;
         int counter =0;
 
-        PrintInitialTable(INITIAL_FRAME_SIZE);
+        PrintInitialTable("FIFO",INITIAL_FRAME_SIZE);
 
         while (iterator.hasNext()){
             Page p = iterator.next();
@@ -31,7 +32,7 @@ public abstract class Algorithm {
         int head = 0;
         int number = 0;
 
-        PrintInitialTable(INITIAL_FRAME_SIZE);
+        PrintInitialTable("OPT",INITIAL_FRAME_SIZE);
 
         while (iterator.hasNext()){
             Page p = iterator.next();
@@ -61,7 +62,7 @@ public abstract class Algorithm {
         int head = 0;
         int number = 1;
 
-        PrintInitialTable(INITIAL_FRAME_SIZE);
+        PrintInitialTable("LRU",INITIAL_FRAME_SIZE);
 
         while (iterator.hasNext()){
             Page p = iterator.next();
@@ -102,7 +103,7 @@ public abstract class Algorithm {
         int head = 0;
         int counter =0;
 
-        PrintInitialTable(INITIAL_FRAME_SIZE);
+        PrintInitialTable("aLRU",INITIAL_FRAME_SIZE);
 
         while (iterator.hasNext()){
             p = iterator.next();
@@ -126,20 +127,42 @@ public abstract class Algorithm {
                         if(frames[i].equals(temp))
                             frames[i] = p;
                 }
-                PrintPagesStatus(p, frames);
                 stos.add(p);
                 counter++;
             }else{
                 int pos = stos.conatains(p);
                 stos.get(pos).setMifBit(true);
             }
+            PrintPagesStatus(p, frames);
         }
         return counter;
     }
 
 
-    public static int RAND(){
-        return 0;
+    public static int RAND(ArrayList<Page> pagesReferences, int INITIAL_FRAME_SIZE){
+        Page[] frames = new Page[INITIAL_FRAME_SIZE];
+        ListIterator<Page> iterator = pagesReferences.listIterator();
+        int head = 0;
+        Random random = new Random();
+        int counter = 0;
+
+        PrintInitialTable("RAND",INITIAL_FRAME_SIZE);
+
+        while (iterator.hasNext()){
+            Page p = iterator.next();
+            if(!PageIsInFrames(p,frames)){
+                if(frames[frames.length-1] == null){
+                    frames[head++] = p;
+                    head %= INITIAL_FRAME_SIZE;
+                }else
+                    frames[random.nextInt(INITIAL_FRAME_SIZE-1)+1] = p;
+                counter++;
+            }
+            PrintPagesStatus(p,frames);
+        }
+
+
+        return counter;
     }
 
     private static boolean PageIsInFrames(Page p, Page[] frames) {
@@ -173,20 +196,21 @@ public abstract class Algorithm {
         return -1;
     }
 
-    private static void PrintInitialTable(int INITIAL_FRAME_SIZE){
-        System.out.print("Reference | ");
+    private static void PrintInitialTable(String name,int INITIAL_FRAME_SIZE){
+        System.out.println(name);
+        System.out.print("Ref|");
         for(int i = 0 ; i < INITIAL_FRAME_SIZE ;i++)
-            System.out.print("Frame "+ i + " | ");
+            System.out.print("Fr"+ (i+1) + " | ");
         System.out.print("\n");
     }
 
     private static void PrintPagesStatus(Page p, Page[] frames){
-        System.out.print("    "+p+"        ");
+        System.out.print(" "+p+"| ");
         for(int i = 0; i < frames.length; i++ ){
             if(frames[i] == null)
-                System.out.print("         ");
+                System.out.print("  ");
             else
-                System.out.print(frames[i]+"        ");
+                System.out.print(frames[i]+" | ");
         }
         System.out.print("\n");
     }
